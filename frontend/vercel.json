@@ -1,18 +1,7 @@
 {
-  "projects": {
-    "frontend": {
-      "rootDirectory": "frontend"
-    }
-  },
-  "builds": [
-    {
-      "src": "frontend/vite.config.js",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "frontend/dist"
-      }
-    }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
   "routes": [
     {
       "src": "/(.*)",
