@@ -11,8 +11,16 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+# Set PORT from .env or default to 10000
+PORT = int(os.getenv("PORT", 10000))
+
 # In-memory store for messages
 messages = []
+
+# ✅ Root route (important for Render)
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({"message": "Echo-Me Backend is running!"}), 200
 
 @app.route('/send', methods=['POST'])
 def send_message():
@@ -41,6 +49,4 @@ def view_messages():
     return jsonify(unlocked), 200
 
 if __name__ == '__main__':
-    # Use PORT from Render dynamically or default for local dev
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(host="0.0.0.0", port=PORT)
