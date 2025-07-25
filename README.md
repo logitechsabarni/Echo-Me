@@ -15,3 +15,5 @@ EchoMe is a full-stack web application where users can send messages that unlock
 cd frontend
 npm install
 npm run dev
+
+The backend URL is live at:- https://echo-me-2.onrender.com
