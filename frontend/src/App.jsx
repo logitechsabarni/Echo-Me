@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const BASE_URL = 'https://echo-me-2.onrender.com';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function App() {
   const [form, setForm] = useState({ to: '', from: '', content: '', unlock_date: '' });
