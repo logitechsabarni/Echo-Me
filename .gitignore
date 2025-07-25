@@ -1,0 +1,17 @@
+# Node modules (frontend)
+node_modules/
+dist/
+
+# Python files (backend)
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+
+# Vite cache
+.vite/
+
+# System/IDE files
+.DS_Store
+.vscode/
