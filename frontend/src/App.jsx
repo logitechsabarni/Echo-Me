@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // ✅ Use your live backend URL here
-const BASE_URL = 'https://echo-me-2.onrender.com';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [form, setForm] = useState({ to: '', from: '', content: '', unlock_date: '' });
