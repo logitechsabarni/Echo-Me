@@ -4,34 +4,44 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import datetime
 
-load_dotenv()  # Load variables from .env file
+# Load environment variables from .env file
+load_dotenv()
 
+# Initialize Flask app
 app = Flask(__name__)
 CORS(app)
 
-# Access .env values
-port = int(os.getenv("PORT", 5000))
+# Set PORT from .env or default to 5000
+PORT = int(os.getenv("PORT", 5000))
 
+# In-memory store for messages
 messages = []
 
 @app.route('/send', methods=['POST'])
 def send_message():
     data = request.get_json()
+
+    # Basic validation
+    required_fields = ["to", "from", "content", "unlock_date"]
+    if not all(field in data for field in required_fields):
+        return jsonify({"error": "Missing required fields"}), 400
+
     message = {
-        "to": data.get("to"),
-        "from": data.get("from"),
-        "content": data.get("content"),
-        "unlock_date": data.get("unlock_date")
+        "to": data["to"],
+        "from": data["from"],
+        "content": data["content"],
+        "unlock_date": data["unlock_date"]
     }
     messages.append(message)
-    return jsonify({"status": "Message scheduled"}), 200
+    return jsonify({"status": "Message scheduled successfully!"}), 200
 
 @app.route('/view', methods=['GET'])
 def view_messages():
     today = datetime.date.today().isoformat()
+
+    # Filter messages based on unlock date
     unlocked = [msg for msg in messages if msg['unlock_date'] <= today]
     return jsonify(unlocked), 200
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)))
-
+    app.run(host="0.0.0.0", port=PORT)
