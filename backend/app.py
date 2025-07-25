@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Set PORT from .env or default to 5000
-PORT = int(os.getenv("PORT", 5000))
+PORT = int(os.getenv("PORT", 10000))
 
 # In-memory store for messages
 messages = []
