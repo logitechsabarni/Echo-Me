@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 function App() {
   const [form, setForm] = useState({ to: '', from: '', content: '', unlock_date: '' });
