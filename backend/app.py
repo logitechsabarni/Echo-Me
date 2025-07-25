@@ -1,11 +1,18 @@
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from dotenv import load_dotenv
 import datetime
+
+load_dotenv()  # Load variables from .env file
 
 app = Flask(__name__)
 CORS(app)
 
-messages = []  # In-memory storage (can replace with DB)
+# Access .env values
+port = int(os.getenv("PORT", 5000))
+
+messages = []
 
 @app.route('/send', methods=['POST'])
 def send_message():
@@ -14,7 +21,7 @@ def send_message():
         "to": data.get("to"),
         "from": data.get("from"),
         "content": data.get("content"),
-        "unlock_date": data.get("unlock_date")  # format: YYYY-MM-DD
+        "unlock_date": data.get("unlock_date")
     }
     messages.append(message)
     return jsonify({"status": "Message scheduled"}), 200
@@ -26,4 +33,4 @@ def view_messages():
     return jsonify(unlocked), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=port)
