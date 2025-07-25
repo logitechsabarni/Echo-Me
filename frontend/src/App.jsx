@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// ✅ Use your live backend URL here
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = 'https://echo-me-2.onrender.com';
 
 function App() {
   const [form, setForm] = useState({ to: '', from: '', content: '', unlock_date: '' });
   const [messages, setMessages] = useState([]);
 
   const fetchMessages = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/view`);
-      setMessages(res.data);
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-    }
+    const res = await axios.get(`${BASE_URL}/view`);
+    setMessages(res.data);
   };
 
   useEffect(() => {
@@ -22,14 +17,10 @@ function App() {
   }, []);
 
   const sendMessage = async () => {
-    try {
-      await axios.post(`${BASE_URL}/send`, form);
-      alert('Message scheduled!');
-      setForm({ to: '', from: '', content: '', unlock_date: '' });
-      fetchMessages();
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
+    await axios.post(`${BASE_URL}/send`, form);
+    alert('Message scheduled!');
+    setForm({ to: '', from: '', content: '', unlock_date: '' });
+    fetchMessages();
   };
 
   return (
