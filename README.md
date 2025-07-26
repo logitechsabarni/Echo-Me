@@ -17,3 +17,6 @@ npm install
 npm run dev
 
 The backend URL is live at:- https://echo-me-4.onrender.com
+
+The frontend URL is live at:- https://echo-me-5.onrender.com
+
