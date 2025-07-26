@@ -2,14 +2,19 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+console.log("👉 Backend URL = ", BASE_URL); // Debug log
 
 function App() {
   const [form, setForm] = useState({ to: '', from: '', content: '', unlock_date: '' });
   const [messages, setMessages] = useState([]);
 
   const fetchMessages = async () => {
-    const res = await axios.get(`${BASE_URL}/view`);
-    setMessages(res.data);
+    try {
+      const res = await axios.get(`${BASE_URL}/view`);
+      setMessages(res.data);
+    } catch (err) {
+      console.error("❌ Error fetching messages:", err);
+    }
   };
 
   useEffect(() => {
@@ -17,10 +22,15 @@ function App() {
   }, []);
 
   const sendMessage = async () => {
-    await axios.post(`${BASE_URL}/send`, form);
-    alert('Message scheduled!');
-    setForm({ to: '', from: '', content: '', unlock_date: '' });
-    fetchMessages();
+    try {
+      await axios.post(`${BASE_URL}/send`, form);
+      alert('Message scheduled!');
+      setForm({ to: '', from: '', content: '', unlock_date: '' });
+      fetchMessages();
+    } catch (err) {
+      console.error("❌ Error sending message:", err);
+      alert("Failed to send message.");
+    }
   };
 
   return (
